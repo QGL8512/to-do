@@ -1,14 +1,14 @@
 <template>
 	<div class="create">
-		<div class="create-item">
+		<div class="create-item" v-if="active">
 			<div class="create-item-box">
-				<input type="text" class="create-item-input" placeholder="请输入您要创建的任务">
+				<input type="text" class="create-item-input" v-model="iptValue" @focus="focusIpt" @blur="blurIpt" :placeholder="placeholder">
 			</div>
-			<div class="create-item-button">
+			<div class="create-item-button"  @click="create">
 				创建
 			</div>
 		</div>
-		<div class="add-item">
+		<div class="add-item" @click="addClick">
 			<span class="iconfont icon-add"></span>
 		</div>
 	</div>
@@ -16,7 +16,47 @@
 
 <script>
 	export default {
-		name: "TodoCreate"
+		name: "TodoCreate",
+		props: {
+			contentList: Array
+		},
+		data() {
+			return {
+				placeholder: '请输入您要创建的任务',
+				iptValue: '',
+				active: false
+			}
+		},
+		methods: {
+			focusIpt() {
+				console.log(this.placeholder)
+				if(this.placeholder =='请输入您要创建的任务'){
+					this.placeholder = ''
+				}
+			},
+			blurIpt() {
+				if(this.placeholder == ''){
+					this.placeholder = '请输入您要创建的任务'
+				}
+			},
+			create() {
+				if(this.iptValue === ''){
+					alert('内容不能为空')
+					return
+				}
+				this.contentList.unshift({
+					// id: 'id'+ new Date().getTime(),
+					id: new Date().getTime(),
+					content: this.iptValue,
+					checked: false
+				})
+				this.iptValue= ""
+				this.active= false
+			},
+			addClick() {
+				this.active = !this.active
+			}
+		}
 	}
 </script>
 
@@ -55,7 +95,7 @@
 			align-items: center
 			border-radius: 50px
 			background: #deeff5
-			box-shadow: -3px 5px 10px 2px rgba(0, 0, 0, .1), -1px 2px 1px 0 rgb(255, 255, 255) inset
+			box-shadow: -1px 1px 5px 2px rgba(0, 0, 0, 0.1), -1px 1px 1px 0 rgb(255, 255, 255) inset
 			.create-item-box
 				width: 100%
 				padding-right: 15px
@@ -76,6 +116,7 @@
 				font-size: 16px
 				border-radius: 50px
 				color: #88d4ec
+				box-shadow: -2px 0px 2px 1px rgba(0, 0, 0, 0.1)
 			
 		
 </style>

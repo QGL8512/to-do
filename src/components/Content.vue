@@ -1,27 +1,72 @@
 <template>
 	<div class="todo-content">
-		<div class="todo-list todo-finish">
+		<div class="todo-list" :class="{'todo-finish': item.checked}" v-for="(item,index) in listData" :key="index" @click="finish(item.id)">
 			<div class="todo-list-checkbox">
 				<div class="checkbox"></div>
 			</div>
 			<div class="todo-list-content">
-				今天看面试题
+				{{item.content}}
 			</div>
-		</div>
-		<div class="todo-list">
-			<div class="todo-list-checkbox">
-				<div class="checkbox"></div>
-			</div>
-			<div class="todo-list-content">
-				今天看面试题
-			</div>
+			<span class="iconfont del"></span>
 		</div>
 	</div>
 </template>
 
 <script>
 	export default {
-		name: "TodoContent"
+		name: "TodoContent",
+		props: {
+			contentList: Array,
+			activeIndex: Number
+		},
+		computed: {
+			listData() {
+				//深拷贝数组
+				let list = JSON.parse(JSON.stringify(this.contentList))
+				let newList = []
+				if(this.activeIndex === 0) {
+					return list
+				}
+				//待办
+				if(this.activeIndex === 1) {
+					list.forEach((item)=>{
+						if(!item.checked) {
+							newList.push(item)
+						}
+					})
+					return newList
+				}
+				//已完成
+				if(this.activeIndex === 2) {
+					list.forEach((item)=>{
+						if(item.checked) {
+							newList.push(item)
+						}
+					})
+				}
+				return newList
+			}
+		},
+		methods: {
+			finish(id) {
+				// console.log(length)
+				// this.$emit('change',this.listData.length)
+				// console.log(this.contentList)
+				// console.log(this.activeIndex)
+				let index = this.contentList.findIndex((item)=>item.id === id)
+				// let index = this.contentList.findIndex((item)=>{
+				// 	item.id === id
+				// 	console.log(id)
+				// })
+				console.log(this.contentList[index])
+				this.contentList[index].checked = !this.contentList[index].checked
+				// console.log(activeIndex)
+			}
+		},
+		beforeUpdate() {
+			this.$emit('change',this.listData.length)
+			//console.log(this.listData.length)
+		}
 	}
 </script>
 
@@ -29,15 +74,18 @@
 	.todo-content
 		width: 100%
 		padding-top: 70px
+		padding-bottom: 100px
 		.todo-list
 			position: relative
 			display: flex
-			height: 50px
+			//height: 50px
 			align-items: center
 			margin: 0 15px 15px 15px
-			padding: 15px
+			padding: 15px 30px 15px 15px
 			font-size: 14px
 			border-radius: 10px
+			white-space:normal
+			word-break:break-all
 			background: #cfebfd
 			box-shadow: -1px 1px 5px 1px rgba(0, 0, 0, 0.1), -1px 2px 1px 0 rgb(255, 255, 255) inset
 			overflow: hidden
@@ -82,7 +130,7 @@
 			content: ""
 			height: 2px
 			top: 0
-			right: 10px
+			right: 30px
 			bottom: 0
 			left: 40px
 			margin: auto 0
