@@ -7,7 +7,9 @@
 			<div class="todo-list-content">
 				{{item.content}}
 			</div>
-			<span class="iconfont del"></span>
+			<div class="icon-box" @click.stop="del(index)">
+				<span class="iconfont icon-add"></span>
+			</div>
 		</div>
 	</div>
 </template>
@@ -61,6 +63,26 @@
 				console.log(this.contentList[index])
 				this.contentList[index].checked = !this.contentList[index].checked
 				// console.log(activeIndex)
+			},
+			del(index) {
+				// this.contentList.splice(index,1)
+					console.log(index)
+					console.log(this.listData)
+					console.log(this.contentList)
+					this.contentList.splice(index,1)
+				// // 
+				// let _index = index
+				// let _this = this
+				
+				// this.$nextTick(()=>{
+				// 	setTimeout(()=>{
+				// 	//console.log(_this.contentList, _index)
+				// 	},10)
+				// })
+				// /*if(this.contentList.length = 0) {
+				// 	this.activeIndex = 0
+				// }*/
+				
 			}
 		},
 		beforeUpdate() {
@@ -71,6 +93,7 @@
 </script>
 
 <style lang="stylus" scoped="scoped">
+	@import '../assets/icon.css'
 	.todo-content
 		width: 100%
 		padding-top: 70px
@@ -81,7 +104,7 @@
 			//height: 50px
 			align-items: center
 			margin: 0 15px 15px 15px
-			padding: 15px 30px 15px 15px
+			padding: 15px 45px 15px 15px
 			font-size: 14px
 			border-radius: 10px
 			white-space:normal
@@ -97,6 +120,17 @@
 					border-radius: 50%
 					box-shadow: 0 0 5px 1px rgba(0, 0, 0, .1)
 					background: #FFF
+			.icon-box
+				position: absolute
+				display: flex
+				justify-content: center
+				transform: rotate(45deg)
+				height: 30px
+				width: 30px
+				right: 5px
+				.icon-add
+					color: #add8e6
+					font-size: 28px
 		.todo-finish .todo-list-checkbox .checkbox
 			position: relative
 			background: #eee
@@ -130,7 +164,7 @@
 			content: ""
 			height: 2px
 			top: 0
-			right: 30px
+			right: 45px
 			bottom: 0
 			left: 40px
 			margin: auto 0

@@ -18,8 +18,6 @@
 </script>
 
 <style lang="stylus" scoped="scoped">
-	.default
-		padding-top: 50px
 		.default-box-image
 			margin: 0 auto
 			width: 311px

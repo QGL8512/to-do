@@ -2,7 +2,7 @@
   <div class="home">
   	<todo-header :contentList="list" @change="getActiveIndex" :listLength="length"></todo-header>
   	<todo-content :contentList="list" :activeIndex="activeIndex" @change="lengthChange"></todo-content>
-  	<todo-create :contentList="list"></todo-create>
+  	<todo-create :contentList="list" :activeIndex="activeIndex"></todo-create>
   	<todo-default :contentList="list"></todo-default>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
   		// console.log(this.activeIndex)
   	},
   	lengthChange(length) {
-  		console.log(length)
+  		// console.log(length)
   		this.length = length
   	}
   }
