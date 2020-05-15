@@ -1,6 +1,6 @@
 <template>
 	<div class="todo-content">
-		<div class="todo-list" :class="{'todo-finish': item.checked}" v-for="(item,index) in listData" :key="index" @click="finish(item.id)">
+			<div class="todo-list" :class="{'todo-finish': item.checked}" v-for="(item,index) in listData" :key="index" @click="finish(item.id)">
 			<div class="todo-list-checkbox">
 				<div class="checkbox"></div>
 			</div>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+	import { MessageBox } from 'mint-ui';
 	export default {
 		name: "TodoContent",
 		props: {
@@ -66,10 +67,25 @@
 			},
 			del(index) {
 				// this.contentList.splice(index,1)
-					console.log(index)
-					console.log(this.listData)
-					console.log(this.contentList)
-					this.contentList.splice(index,1)
+					// console.log(index)
+					// console.log(this.listData)
+					// console.log(this.contentList)
+					// MessageBox('提示', '操作成功')
+					let _this = this
+					let _index = index
+					MessageBox({
+						title: '提示',
+						message: '是否删除该事项？',
+						showCancelButton: true,
+						confirmButtonText: '删除',
+						cancelButtonText: '取消'
+					}).then(action=>{
+						if(action == 'confirm') {
+							_this.contentList.splice(_index,1)
+						}
+					})
+
+					// 
 				// // 
 				// let _index = index
 				// let _this = this

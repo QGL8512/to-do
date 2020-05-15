@@ -53,6 +53,7 @@
 			color: #333333
 			font-size: 14px
 			box-shadow: 0 2px 3px rgba(0, 0, 0, .1)
+			z-index: 10
 			.header-left
 				width: 100%
 				.active-text

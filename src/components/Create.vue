@@ -15,6 +15,7 @@
 </template>
 
 <script>
+	import { Toast } from 'mint-ui';
 	export default {
 		name: "TodoCreate",
 		props: {
@@ -43,7 +44,11 @@
 			},
 			create() {
 				if(this.iptValue === ''){
-					alert('内容不能为空')
+					Toast({
+						message: '内容不能为空',
+						position: 'middle',
+						duration: 1000
+					})
 					return
 				}
 				this.contentList.unshift({
